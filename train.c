@@ -14,9 +14,11 @@ void station_init(Station * station)
 }
 void *train(void *args) {
 
-    Station* station1=(struct Station*) args;
+    Station* station1=(Station*)((struct train_args*) args)->station;
+    int number_of_seats=(int)((struct train_args*) args)->number_of_seats;
+
     //call the function to start loading the train with passengers
-    station_load_train(station1,50);
+    station_load_train(station1,number_of_seats);
     pthread_exit(NULL);
 }
 void station_load_train(Station *station, int count)
@@ -27,7 +29,7 @@ void station_load_train(Station *station, int count)
 
     station->availableTrainSeatNum = count;//assign the number of seats
     station->train_in_station = 1;//a train is in the station
-    printf("train arrived\n");
+    printf("train arrived with %d seats available\n",count);
 
     pthread_cond_broadcast(&(station->train_in_station_cond));//signal all waiting passengers that the train has arrived
 

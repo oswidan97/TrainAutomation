@@ -13,6 +13,10 @@ typedef struct Station
 
 
 }Station;
+typedef struct train_args{
+    Station* station;
+    int number_of_seats;
+}train_args;
 typedef struct pair{
     void * first;
     void * second;
